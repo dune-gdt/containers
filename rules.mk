@@ -12,21 +12,27 @@ REPONAMES = $(patsubst %/,%,$(dir $(wildcard */Dockerfile.in)))
 DOCKER_NOCACHE=
 BUILD_CMD=$(DOCKER_SUDO) docker build ${DOCKER_NOCACHE} --rm=true ${DOCKER_QUIET}
 REGISTRY=zivgitlab.wwu.io/ag-ohlberger/dune-community/docker
+GITREV?=$(shell git log -1 --pretty=format:"%H")
 
-.PHONY: push all $(REPONAMES) readme
+.PHONY: push all $(REPONAMES) readme IS_DIRTY
+
+IS_DIRTY:
+	@cd $(THISDIR) ; \
+	git diff-index --quiet HEAD || \
+	(git update-index -q --really-refresh && git diff --no-ext-diff --quiet --exit-code) || \
+	(git diff --no-ext-diff ; exit 1)
 
 check_client:
 	@$(DOCKER_SUDO) docker info > /dev/null  || \
 	  (echo "cannot connect to docker client. export DOCKER_SUDO=sudo ?" ; exit 1)
 
-$(REPONAMES): check_client
-	$(eval GITREV=$(shell git describe --tags --dirty --always --long))
+$(REPONAMES): check_client IS_DIRTY
 	$(eval IMAGE=$(NAME)-$@)
 	$(eval REPO=$(REGISTRY)/$(IMAGE))
 	$(eval DF=Dockerfile.generated.$(DEBIANVERSION))
 	$(eval CTX=$@_$(DEBIANVERSION)_context.tar)
-	tar --create --file $(CTX) -C $@/../common_context .
-	m4 -D BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
+	@tar --create --file $(CTX) -C $@/../common_context .
+	@m4 -D BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 		-D IMAGE="$(IMAGE)" \
 		-D AUTHOR="$(AUTHOR)" \
 		-D GITREV=$(GITREV) \
@@ -34,7 +40,7 @@ $(REPONAMES): check_client
 		-D DEBIANVERSION=$(DEBIANVERSION) \
 		-I$(THISDIR)/include -I ./include $@/Dockerfile.in > $@/$(DF)
 	(test -n "${DOCKER_PRUNE}" && docker system prune -f) || true
-	tar --append --file $(CTX) -C $@ .
+	@tar --append --file $(CTX) -C $@ .
 	cd $@ && cat ../$(CTX) | $(BUILD_CMD) \
 		-t $(REPO):$(GITREV) -f $(DF) -
 	$(DOCKER_SUDO) docker tag $(REPO):$(GITREV) $(REPO):latest

@@ -7,7 +7,8 @@
 #   Rene Milk (2017)
 
 SUBDIRS = manylinux arch debian gitlabci testing
-
+PUSH = $(addprefix push_,$(SUBDIRS))
+README = $(addprefix readme_,$(SUBDIRS))
 .PHONY: subdirs $(SUBDIRS) base push debian_*
 
 subdirs: $(SUBDIRS)
@@ -16,15 +17,19 @@ testing: debian_full debian_unstable-full
 
 $(SUBDIRS):
 	make -C $@
-	make -C $@ readme
 
 debian_%:
 	make -C debian $*
 
+readme_%:
+	make -C $* readme
+
 arch_%:
 	make -C arch $*
 
-push: push_arch push_debian push_gitlabci push_testing
+push: $(PUSH)
+
+readme: $(README)
 
 push_debian_ci:
 	make -C debian ci_push
