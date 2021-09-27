@@ -84,7 +84,7 @@ RUN  apt install -y intel-basekit intel-hpckit
 # now that Intel MPI is available, install packages that require MPI
 RUN APT_INSTALL libeigen3-dev libsuitesparse-dev \
                 libmumps-scotch-dev \
-                valgrind-mpi liblpsolve55-dev
+                valgrind-mpi
 
 # Also copied from 'full', except that the TBB installation has been removed (TBB is already contained in the Intel toolkit)
 RUN APT_UPDATE APT_REDIRECT && \
@@ -94,16 +94,6 @@ RUN APT_UPDATE APT_REDIRECT && \
     apt-get clean && \
     wget https://codecov.io/bash -O /usr/local/bin/codecov && \
     chmod +x /usr/local/bin/codecov && \
-    rm -rf /var/lib/apt/lists/* && \
-    cd /tmp && \
-    wget http://www.qhull.org/download/qhull-2020-src-8.0.0.tgz -O qhull.tgz && \
-    tar xzf qhull.tgz && \
-    cd qhull-2020.1 && \
-    mkdir cmbuild && \
-    cd cmbuild && \
-    cmake .. -Wno-dev -DCMAKE_INSTALL_PREFIX=/usr/local \
-      -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_POSITION_INDEPENDENT_CODE=ON && \
-    make && \
-    make install
+    rm -rf /var/lib/apt/lists/*
 
 include(clang-tools)
