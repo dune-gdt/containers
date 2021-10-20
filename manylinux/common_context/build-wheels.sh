@@ -17,7 +17,7 @@ cd ${DUNE_SRC_DIR}
 
 for md in xt gdt ; do
   [[ -d dune-${md} ]] && \
-    ./dune-common/bin/dunecontrol --only=dune-${md} --opts=${OPTS} make -j $(nproc --ignore 1) bindings
+    ./dune-common/bin/dunecontrol --only=dune-${md} --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1) bindings
 done
 
 mkdir ${WHEEL_DIR}/{tmp,final} -p || true
