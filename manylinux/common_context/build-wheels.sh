@@ -13,7 +13,8 @@ source /usr/local/bin/pybin.sh
 export CCACHE_DIR=${WHEEL_DIR}/../cache
 
 cd ${DUNE_SRC_DIR}
-./dune-common/bin/dunecontrol --opts=${OPTS} all
+./dune-common/bin/dunecontrol --opts=${OPTS} configure
+./dune-common/bin/dunecontrol --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1) 
 
 for md in xt gdt ; do
   [[ -d dune-${md} ]] && \
