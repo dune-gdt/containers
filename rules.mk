@@ -45,7 +45,7 @@ $(REPONAMES): check_client IS_DIRTY
 		-t $(REPO):$(GITREV) -f $(DF) -
 	$(DOCKER_SUDO) docker tag $(REPO):$(GITREV) $(REPO):latest
 
-push_%:
+push_%: %
 	$(DOCKER_SUDO) docker push $(REGISTRY)/$(NAME)-$*
 
 push: $(addprefix push_,$(REPONAMES))
