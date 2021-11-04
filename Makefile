@@ -11,6 +11,8 @@ PUSH = $(addprefix push_,$(SUBDIRS))
 README = $(addprefix readme_,$(SUBDIRS))
 .PHONY: subdirs $(SUBDIRS) base push debian_*
 
+include $(dir $(lastword $(MAKEFILE_LIST)))/rules.mk
+
 subdirs: $(SUBDIRS)
 
 testing: debian_full debian_unstable-full
