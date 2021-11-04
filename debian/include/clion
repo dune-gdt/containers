@@ -7,10 +7,9 @@
 #   Rene Milk       (2017)
 
 include(global_macros)
-include(allinea)
 
-ENV PYCHARM_VERSION=2020.3.2 \
-    CLION_VERSION=2020.3.2
+ENV PYCHARM_VERSION=2021.2.3 \
+    CLION_VERSION=2021.2.3
 
 RUN APT_UPDATE APT_REDIRECT && \
     apt dist-upgrade -y && \
