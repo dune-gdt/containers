@@ -7,7 +7,6 @@
 #   Rene Milk       (2017)
 
 include(global_macros)
-include(allinea)
 
 RUN APT_UPDATE APT_REDIRECT && \
     APT_INSTALL python3-setuptools cython3 wget openjdk-8-jdk libxext6 libxrender1 libxtst6 libxi6 APT_REDIRECT && \

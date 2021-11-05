@@ -11,6 +11,9 @@ PUSH = $(addprefix push_,$(SUBDIRS))
 README = $(addprefix readme_,$(SUBDIRS))
 .PHONY: subdirs $(SUBDIRS) base push debian_*
 
+THIS_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
+include $(THIS_DIR)/rules.mk
+
 subdirs: $(SUBDIRS)
 
 testing: debian_full debian_unstable-full
@@ -28,6 +31,10 @@ arch_%:
 	make -C arch $*
 
 push: $(PUSH)
+
+docker_readme:
+	docker run -it -v $(THIS_DIR):/src docker:stable \
+	    sh -c "apk --update add py3-pip m4 git file bash python3 curl make tar && make readme -C /src"
 
 readme: $(README)
 
