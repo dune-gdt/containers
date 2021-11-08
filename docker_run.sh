@@ -20,8 +20,8 @@ BASEDIR=${PWD}
 CONTAINER=${1}
 SYSTEM=${CONTAINER%%-*}
 if echo $CONTAINER | xargs python -c "import sys; sys.exit('/' in sys.argv[1])" ; then
-  # the container name does not have a prefix, assume it is from dunecommunity/
-  export CONTAINER="dunecommunity/${CONTAINER}"
+  # the container name does not have a prefix, assume it is from us
+  export CONTAINER="zivgitlab.wwu.io/ag-ohlberger/dune-community/docker/${CONTAINER}"
 fi
 PROJECT=${2}
 shift 2
@@ -40,22 +40,14 @@ if [ -e ${CID_FILE} ]; then
 
 else
 
-  if systemctl status docker | grep running &> /dev/null; then
-    echo -n "Starting "
-  else
-    echo -n "Starting docker "
-    sudo systemctl start docker
-    echo -n "and "
-  fi
-
-  echo "a docker container"
+  echo "Starting a docker container"
   echo "  for ${PROJECT}"
   echo "  based on ${CONTAINER}"
   echo "  on port $PORT"
 
   mkdir -p ${DOCKER_HOME} &> /dev/null
 
-  sudo docker run --rm=true --privileged=true -t -i --hostname docker --cidfile=${CID_FILE} \
+  docker run --rm=true --privileged=true -t -i --hostname docker --cidfile=${CID_FILE} \
     -e LOCAL_USER=$USER -e LOCAL_UID=$(id -u) -e LOCAL_GID=$(id -g) \
     -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e QT_X11_NO_MITSHM=1 \
