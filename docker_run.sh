@@ -31,13 +31,15 @@ DOCKER_HOME=${HOME}/.docker-homes/${SYSTEM}
 DOCKER_BIN=${DOCKER:-docker}
 
 if [[ ${DOCKER_BIN::5} == "sudo " ]]; then
-  LOCAL_USER=root
-  LOCAL_UID=0
-  LOCAL_GID=0
-else
   LOCAL_USER=$USER
   LOCAL_UID=$(id -u)
   LOCAL_GID=$(id -g)
+  TARGET_HOME=/home/${USER}
+else
+  LOCAL_USER=root
+  LOCAL_UID=0
+  LOCAL_GID=0
+  TARGET_HOME=/root
 fi
 
 if [ -e ${CID_FILE} ]; then
@@ -70,8 +72,8 @@ else
     -e GDK_DPI_SCALE=${GDK_DPI_SCALE:-1} \
     -e EXPOSED_PORT=$PORT -p $PORT:$PORT \
     -v /etc/localtime:/etc/localtime:ro \
-    -v $DOCKER_HOME:/home/${USER} \
-    -v ${BASEDIR}/${PROJECT}:/home/${USER}/${PROJECT} \
+    -v $DOCKER_HOME:$TARGET_HOME \
+    -v ${BASEDIR}/${PROJECT}:$TARGET_HOME/${PROJECT} \
     ${CONTAINER} "${@}"
 
   rm -f ${CID_FILE}
