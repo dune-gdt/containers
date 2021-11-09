@@ -24,6 +24,7 @@ fi
 PROJECT=${2}
 shift 2
 CID_FILE=${BASEDIR}/.${PROJECT}-${CONTAINER//\//_}.cid
+DOCKER_BIN=${DOCKER:-docker}
 
-docker exec -it $(cat ${CID_FILE}) gosu $USER "${@}"
+${DOCKER_BIN} exec -it $(cat ${CID_FILE}) gosu $USER "${@}"
 

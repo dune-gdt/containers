@@ -33,6 +33,9 @@ RUN echo "alias ls='ls -h --color=auto';\
   python -m pip install wheel auditwheel && \
   python -m pip install pip==${PIP_VERSION}
 
+# yum is python2 but we changed the dafault above
+RUN sed -i 's/python/python2/' /usr/bin/yum
+
 COPY entrypoint.sh /usr/local/bin/
 COPY gosu-amd64 /usr/local/bin/gosu
 COPY build-wheels.sh /usr/local/bin/

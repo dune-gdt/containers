@@ -28,6 +28,17 @@ shift 2
 CID_FILE=${BASEDIR}/.${PROJECT}-${CONTAINER//\//_}.cid
 PORT="18$(( ( RANDOM % 10 ) ))$(( ( RANDOM % 10 ) ))$(( ( RANDOM % 10 ) ))"
 DOCKER_HOME=${HOME}/.docker-homes/${SYSTEM}
+DOCKER_BIN=${DOCKER:-docker}
+
+if [[ ${DOCKER_BIN::5} == "sudo " ]]; then
+  LOCAL_USER=root
+  LOCAL_UID=0
+  LOCAL_GID=0
+else
+  LOCAL_USER=$USER
+  LOCAL_UID=$(id -u)
+  LOCAL_GID=$(id -g)
+fi
 
 if [ -e ${CID_FILE} ]; then
 
@@ -37,6 +48,10 @@ if [ -e ${CID_FILE} ]; then
   echo "is already running. Execute the following command to connect to it"
   echo "(docker_exec.sh is provided alongside this file):"
   echo "  docker_exec.sh ${CONTAINER} ${PROJECT} ${@}"
+  echo "If you are absolutely certain that there is no running container"
+  echo "(check with '${DOCKER_BIN} ps' and stop it otherwise), you may"
+  echo "  rm $CID_FILE"
+  echo "and try again."
 
 else
 
@@ -47,8 +62,8 @@ else
 
   mkdir -p ${DOCKER_HOME} &> /dev/null
 
-  docker run --rm=true --privileged=true -t -i --hostname docker --cidfile=${CID_FILE} \
-    -e LOCAL_USER=$USER -e LOCAL_UID=$(id -u) -e LOCAL_GID=$(id -g) \
+  ${DOCKER_BIN} run --rm=true --privileged=true -t -i --hostname docker --cidfile=${CID_FILE} \
+    -e LOCAL_USER=$LOCAL_USER -e LOCAL_UID=$LOCAL_UID -e LOCAL_GID=$LOCAL_GID \
     -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e QT_X11_NO_MITSHM=1 \
     -e QT_SCALE_FACTOR=${QT_SCALE_FACTOR:-1} \
