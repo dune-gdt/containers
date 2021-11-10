@@ -27,7 +27,7 @@ for md in xt gdt ; do
         [[ $whl == *"manylinux"* ]] || \
             python -m auditwheel repair --plat ${PLATFORM} $whl -w ${WHEEL_DIR}/final
     done
-    # install wheel into the dune-venv
-    ./${DUNE_BUILD_DIR}/dune-common/run-in-dune-env pip install ${WHEEL_DIR}/final/dune-${md}*.whl
+    # install wheel to be available for other modules
+    pip install ${WHEEL_DIR}/final/dune_${md}*.whl
   fi
 done
