@@ -22,7 +22,7 @@ for md in xt gdt ; do
     ./dune-common/bin/dunecontrol --only=dune-${md} --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1) bindings
     python -m pip wheel ${DUNE_BUILD_DIR}/dune-${md}/python -w ${WHEEL_DIR}/tmp
     # Bundle external shared libraries into the wheels
-    for whl in ${WHEEL_DIR}/tmp/dune-${md}*.whl; do
+    for whl in $(ls ${WHEEL_DIR}/tmp/dune_${md}*.whl); do
         # but only in the freshly built wheels, not the downloaded dependencies
         [[ $whl == *"manylinux"* ]] || \
             python -m auditwheel repair --plat ${PLATFORM} $whl -w ${WHEEL_DIR}/final
