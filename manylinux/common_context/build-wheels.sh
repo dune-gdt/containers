@@ -11,6 +11,9 @@ OPTS=${DUNE_SRC_DIR}/config.opts/manylinux
 # sets Python path, etc.
 source /usr/local/bin/pybin.sh
 export CCACHE_DIR=${WHEEL_DIR}/../cache
+export TBB_ROOT=PYBIND11_ROOT=$(python3 -c "import sysconfig; print(sysconfig.get_path('data'))")
+export TBB_LIBRARY_DIR=${TBB_ROOT}/lib
+export TBB_INCLUDE_DIR=${TBB_ROOT}/include/oneapi
 mkdir ${WHEEL_DIR}/{tmp,final} -p || true
 
 cd ${DUNE_SRC_DIR}
