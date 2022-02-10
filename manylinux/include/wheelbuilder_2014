@@ -2,16 +2,13 @@ FROM quay.io/pypa/manylinux2014_x86_64:2021-11-20-f410d11
 
 MAINTAINER René Fritze <rene.fritze@wwu.de>
 
-# originally /usr/local/bin/cmake is a symlink to rolling version install in /opt
-# we want to avoid that for now
 COPY pybin.sh /usr/local/bin/
 RUN yum install -y atlas-devel openmpi-devel  \
         fltk freeglut libpng libjpeg \
         tk tcl xorg-x11-server-Xvfb xauth \
         boost169 boost169-openmpi-devel cmake3 eigen3-devel SuperLU-devel \
         tbb-devel openblas-openmp64 cmake3-gui vim ccache lapack-devel suitesparse \
-      && rm /usr/local/bin/cmake \
-      && ln -s /usr/bin/cmake3 /usr/local/bin/cmake
+      && pipx install --force cmake==3.15.3
 
 include(ps1)
 include(dune_cli)
