@@ -28,6 +28,10 @@ readme_%:
 arch_%:
 	make -C arch $*
 
+alpine_%:
+	make -C alpine $*
+
+
 push: $(PUSH)
 
 docker_readme:

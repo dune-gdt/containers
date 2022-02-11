@@ -63,6 +63,11 @@ manylinux:
     SUBDIR: manylinux
   extends: [.docker-in-docker, .subdir]
 
+alpine:
+  stage: dev
+  variables:
+    SUBDIR: alpine
+  extends: [.docker-in-docker, .subdir]
 
 sanity:
   stage: sanity

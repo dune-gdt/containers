@@ -1,0 +1,25 @@
+# This file is part of the dune-community/Dockerfiles project:
+#   https://github.com/dune-community/Dockerfiles
+# Copyright 2017 dune-community/Dockerfiles developers and contributors. All rights reserved.
+# License: Dual licensed as BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
+#      or  GPL-2.0+ (http://opensource.org/licenses/gpl-license)
+# Authors:
+#   Felix Schindler (2017)
+#   Rene Milk       (2017)
+
+FROM alpine:3.15
+
+ENV DXT_ENVIRONMENT=alpine-minimal \
+    DXT_DOCKER=1
+
+# the bare minimum
+RUN apk add -U git bash cmake g++ gcc pkgconfig make ninja boost-dev \
+        python3-dev suitesparse-dev py3-virtualenv py3-pip musl-dev openblas-dev \
+    && cd /tmp && git clone https://github.com/dune-community/cli-setup \
+    && cd cli-setup \
+    && cmake . \
+    && make install \
+    && rm -rf /tmp/cli-setup
+
+include(labels)
+
