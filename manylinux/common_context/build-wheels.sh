@@ -17,11 +17,10 @@ export CCACHE_DIR=${WHEEL_DIR}/../cache
 mkdir ${WHEEL_DIR}/{tmp,final} -p || true
 
 cd ${DUNE_SRC_DIR}
-./dune-common/bin/dunecontrol --opts=${OPTS} configure
-./dune-common/bin/dunecontrol --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1)
-
-
-if [[ -d dune-${md} ]]; then
+if [[ "${md}" == "all" ]] ; then
+  ./dune-common/bin/dunecontrol --opts=${OPTS} configure
+  ./dune-common/bin/dunecontrol --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1)
+elif [[ -d dune-${md} ]] ; then
   ./dune-common/bin/dunecontrol --only=dune-${md} --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1) bindings
   python -m pip wheel ${DUNE_BUILD_DIR}/dune-${md}/python -w ${WHEEL_DIR}/tmp
   # Bundle external shared libraries into the wheels
