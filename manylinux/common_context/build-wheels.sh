@@ -19,9 +19,9 @@ mkdir ${WHEEL_DIR}/{tmp,final} -p || true
 cd ${DUNE_SRC_DIR}
 if [[ "${md}" == "all" ]] ; then
   ./dune-common/bin/dunecontrol --opts=${OPTS} configure
-  ./dune-common/bin/dunecontrol --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1)
+  ./dune-common/bin/dunecontrol --opts=${OPTS} bexec ninja -d explain -j $(nproc --ignore 1) -l $(nproc --ignore 1)
 elif [[ -d dune-${md} ]] ; then
-  ./dune-common/bin/dunecontrol --only=dune-${md} --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1) bindings
+  ./dune-common/bin/dunecontrol --only=dune-${md} --opts=${OPTS} bexec ninja -d explain -j $(nproc --ignore 1) -l $(nproc --ignore 1) bindings
   python -m pip wheel ${DUNE_BUILD_DIR}/dune-${md}/python -w ${WHEEL_DIR}/tmp
   # Bundle external shared libraries into the wheels
   for whl in $(ls ${WHEEL_DIR}/tmp/dune_${md}*.whl); do
