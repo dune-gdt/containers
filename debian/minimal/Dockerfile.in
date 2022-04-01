@@ -8,4 +8,5 @@
 #   Rene Milk       (2017)
 
 include(minimal)
+include(mold)
 include(labels)
