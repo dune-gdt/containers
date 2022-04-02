@@ -29,7 +29,7 @@ RUN APT_UPDATE APT_REDIRECT && \
     for ii in cc cpp clang clang++ clang-${CLANG_VERSION} clang++-${CLANG_VERSION} \
         cpp-${GCC_VERSION} g++ g++-${GCC_VERSION} gcc ; do ln -s $(which ccache) $ii; done && \
     cd /tmp && \
-    git clone git://github.com/rkitover/vimpager /tmp/vimpager && \
+    git clone https://github.com/rkitover/vimpager /tmp/vimpager && \
     cd /tmp/vimpager && \
     make install && \
     cd && rm -r /tmp/vimpager && \
