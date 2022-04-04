@@ -9,3 +9,5 @@ ENV DEBIAN_FRONTEND=noninteractive \
     DXT_LIBCLANG_SO=/usr/lib/llvm-${CLANG_VERSION}/lib/libclang.so.1 \
     CCACHE_COMPILERCHECK=content \
     CCACHE_COMPRESS=true
+
+include(mold)
