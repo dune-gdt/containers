@@ -6,7 +6,7 @@
 # Authors:
 #   Rene Milk (2017)
 
-SUBDIRS = manylinux arch debian gitlabci testing
+SUBDIRS = manylinux arch debian gitlabci 
 PUSH = $(addprefix push_,$(SUBDIRS))
 README = $(addprefix readme_,$(SUBDIRS))
 .PHONY: subdirs $(SUBDIRS) base push debian_*
@@ -15,8 +15,6 @@ THIS_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 include $(THIS_DIR)/rules.mk
 
 subdirs: $(SUBDIRS)
-
-testing: debian_full debian_unstable-full
 
 $(SUBDIRS):
 	make -C $@
