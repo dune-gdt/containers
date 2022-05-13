@@ -1,9 +1,9 @@
-ifelse(DEBIANVERSION, `buster', `define(`WITH_BACKPORTS', `-t buster-backports')', `define(`WITH_BACKPORTS', `')')
+ifelse(DEBIANVERSION, `stable', `define(`WITH_BACKPORTS', `-t stable-backports')', `define(`WITH_BACKPORTS', `')')
 
-ifelse(DEBIANVERSION, `buster', include(buster-minimal), include(unstable-minimal))
-ifelse(DEBIANVERSION, `buster', `define(`LIBCPP_DEV', `libc++-dev')', `define(`LIBCPP_DEV', `libc++-dev')')
-ifelse(DEBIANVERSION, `buster', `define(`JDK', `openjdk-11-jdk')', `define(`JDK', `openjdk-11-jdk')')
-ifelse(DEBIANVERSION, `buster', `define(`LIBLAPACKE_DEV', `liblapacke-dev')', `define(`LIBLAPACKE_DEV', `')')
+ifelse(DEBIANVERSION, `stable', include(stable-minimal), include(unstable-minimal))
+ifelse(DEBIANVERSION, `stable', `define(`LIBCPP_DEV', `libc++-dev')', `define(`LIBCPP_DEV', `libc++-dev')')
+ifelse(DEBIANVERSION, `stable', `define(`JDK', `openjdk-11-jdk')', `define(`JDK', `openjdk-11-jdk')')
+ifelse(DEBIANVERSION, `stable', `define(`LIBLAPACKE_DEV', `liblapacke-dev')', `define(`LIBLAPACKE_DEV', `')')
 
 ENV DEBIAN_FRONTEND=noninteractive \
     DXT_LIBCLANG_SO=/usr/lib/llvm-${CLANG_VERSION}/lib/libclang.so.1 \

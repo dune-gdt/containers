@@ -36,7 +36,7 @@ $(REPONAMES): check_client IS_DIRTY
 		-D IMAGE="$(IMAGE)" \
 		-D AUTHOR="$(AUTHOR)" \
 		-D GITREV=$(GITREV) \
-		-D DEBIANBASEDATE=20210511 \
+		-D DEBIANBASEDATE=20220509 \
 		-D DEBIANVERSION=$(DEBIANVERSION) \
 		-I$(THISDIR)/include -I ./include $@/Dockerfile.in > $@/$(DF)
 	(test -n "${DOCKER_PRUNE}" && docker system prune -f) || true
