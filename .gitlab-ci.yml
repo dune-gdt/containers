@@ -1,7 +1,6 @@
 stages:
   - sanity
   - dev
-  - testing
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -62,12 +61,6 @@ manylinux:
     SUBDIR: manylinux
   extends: [.docker-in-docker, .subdir]
 
-
-TestingImages:
-  stage: testing
-  extends: [.docker-in-docker, .subdir]
-  variables:
-    SUBDIR: testing
 
 sanity:
   stage: sanity
