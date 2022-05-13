@@ -4,4 +4,4 @@ RUN APT_UPDATE && \
     wget -q http://de.archive.ubuntu.com/ubuntu/pool/main/f/fonts-ubuntu/fonts-ubuntu_0.83-4ubuntu2_all.deb && \
     dpkg -i fonts-ubuntu_0.83-4ubuntu2_all.deb APT_REDIRECT && \
     rm fonts-ubuntu_0.83-4ubuntu2_all.deb
-ifelse(DEBIANVERSION, `buster', include(buster-qtcreator), include(unstable-qtcreator))
+ifelse(DEBIANVERSION, `stable', include(stable-qtcreator), include(unstable-qtcreator))
