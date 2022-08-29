@@ -30,7 +30,7 @@ RUN echo "alias ls='ls -h --color=auto';\
     echo "source  /etc/profile.d/dxt.sh" >> /etc/profile && \
   alternatives --install /usr/bin/python python /opt/python/${PY_SHORT}/bin/python 100 && \
   alternatives --install /usr/bin/python3 python3 /opt/python/${PY_SHORT}/bin/python 100 &&\
-  python -m pip install wheel auditwheel && \
+  python -m pip install wheel auditwheel ninja && \
   python -m pip install pip==${PIP_VERSION}
 
 # yum is python2 but we changed the dafault above
