@@ -39,8 +39,8 @@ if [[ $UID_ != 0 ]] ; then
   echo "$USERNAME_ ALL=(ALL) NOPASSWD:/usr/bin/yum" >> /etc/sudoers
 fi
 
-if [ "X$@" == "X" ]; then
+if [[ "X${@}" == "X" ]]; then
   exec gosu $USERNAME_ /bin/bash
 else
-  exec gosu $USERNAME_ "$@"
+  exec gosu $USERNAME_ "${@}"
 fi
