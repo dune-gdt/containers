@@ -9,7 +9,7 @@ echo "127.0.0.1 ${HOSTNAME}" >> /etc/hosts
 
 # we are running as root, if UID_ == 0, there is little we can do but continue ...
 if [[ $UID_ == 0 ]] ; then
-  if [ "X$@" == "X" ]; then
+  if [[ "X$@" == "X" ]] ; then
     exec /bin/bash
   else
     exec "$@"
