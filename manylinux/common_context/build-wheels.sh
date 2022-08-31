@@ -20,12 +20,12 @@ cd ${DUNE_SRC_DIR}
 for md in xt gdt ; do
   if [[ -d dune-${md} ]]; then
     ./dune-common/bin/dunecontrol --only=dune-${md} --opts=${OPTS} make -j $(nproc --ignore 1) -l $(nproc --ignore 1) bindings
-    python -m pip wheel ${DUNE_BUILD_DIR}/dune-${md}/python -w ${WHEEL_DIR}/tmp
+    python3 -m pip wheel ${DUNE_BUILD_DIR}/dune-${md}/python -w ${WHEEL_DIR}/tmp
     # Bundle external shared libraries into the wheels
     for whl in $(ls ${WHEEL_DIR}/tmp/dune_${md}*.whl); do
         # but only in the freshly built wheels, not the downloaded dependencies
         [[ $whl == *"manylinux"* ]] || \
-            python -m auditwheel repair --plat ${PLATFORM} $whl -w ${WHEEL_DIR}/final
+            python3 -m auditwheel repair --plat ${PLATFORM} $whl -w ${WHEEL_DIR}/final
     done
     # install wheel to be available for other modules
     pip install ${WHEEL_DIR}/final/dune_${md}*.whl
