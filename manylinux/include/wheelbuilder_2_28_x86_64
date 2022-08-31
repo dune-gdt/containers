@@ -8,7 +8,7 @@ RUN yum install -y atlas-devel openmpi openmpi-devel  \
         tk tcl xorg-x11-server-Xvfb xauth \
         boost boost-openmpi-devel eigen3-devel SuperLU-devel \
         tbb-devel openblas-openmp64 vim lapack-devel suitesparse \
-        ptscotch-openmpi-devel
+        ptscotch-openmpi-devel wget
 
 include(ps1)
 include(dune_cli)
@@ -34,7 +34,10 @@ RUN echo "alias ls='ls -h --color=auto';\
     echo "source  /etc/profile.d/dxt.sh" >> /etc/profile && \
   rm /usr/local/bin/python3* && \
   /opt/python/${PY_SHORT}/bin/python -m pip install wheel auditwheel && \
-  /opt/python/${PY_SHORT}/bin/python -m pip install pip==${PIP_VERSION}
+  /opt/python/${PY_SHORT}/bin/python -m pip install pip==${PIP_VERSION} && \
+  wget -c https://github.com/ccache/ccache/releases/download/v4.6.3/ccache-4.6.3-linux-x86_64.tar.xz  -O - | tar Jx && \
+  mv ccache-*/ccache /usr/local/bin && \
+  rm -rf ccache-*
 
 COPY entrypoint.sh /usr/local/bin/
 COPY gosu-amd64 /usr/local/bin/gosu
