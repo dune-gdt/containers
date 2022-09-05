@@ -1,0 +1,49 @@
+FROM quay.io/pypa/manylinux_2_28_x86_64:2022-08-29-0fd77fa
+
+MAINTAINER René Fritze <rene.fritze@wwu.de>
+
+COPY pybin.sh /usr/local/bin/
+RUN yum install -y atlas-devel openmpi openmpi-devel  \
+        fltk freeglut libpng libjpeg ninja-build \
+        tk tcl xorg-x11-server-Xvfb xauth \
+        boost boost-openmpi-devel eigen3-devel SuperLU-devel \
+        tbb-devel openblas-openmp64 vim lapack-devel suitesparse \
+        ptscotch-openmpi-devel wget
+
+include(ps1)
+include(dune_cli)
+
+ENV MPICC=/usr/lib64/openmpi/bin/mpicc \
+    MPICXX=/usr/lib64/openmpi/bin/mpicxx \
+    PYTHON_VERSION=M4_PYTHON_VERSION \
+    XDG_CACHE_DIR=/home/dxt/src/docker/cache \
+    DUNE_INSTALL_PREFIX=/home/dxt/src/docker/local \
+    DUNE_BUILD_DIR=/home/dxt/src/docker/build \
+    WHEEL_DIR=/home/dxt/src/docker/wheelhouse \
+    PLATFORM=manylinux_2_28_x86_64 \
+    PY_SHORT=M4_PY_SHORT \
+    PIP_VERSION=22.2.2
+
+# dunecontrol/cmake finds ALL of the pythons in /usr/local/bin if we don't delete them
+# it ignores the PYTHON_ROOT setting
+RUN echo "alias ls='ls -h --color=auto';\
+          source /usr/local/bin/pybin.sh;\
+          source /etc/bash.bashrc;\
+          alias ll='ls -lh'" >> /etc/profile.d/dxt.sh && \
+    echo "source  /etc/profile.d/dxt.sh" >> /etc/bashrc && \
+    echo "source  /etc/profile.d/dxt.sh" >> /etc/profile && \
+  rm /usr/local/bin/python3* && \
+  /opt/python/${PY_SHORT}/bin/python -m pip install wheel auditwheel && \
+  /opt/python/${PY_SHORT}/bin/python -m pip install pip==${PIP_VERSION} && \
+  wget -c https://github.com/ccache/ccache/releases/download/v4.6.3/ccache-4.6.3-linux-x86_64.tar.xz  -O - | tar Jx && \
+  mv ccache-*/ccache /usr/local/bin && \
+  rm -rf ccache-*
+
+COPY entrypoint.sh /usr/local/bin/
+COPY gosu-amd64 /usr/local/bin/gosu
+COPY build-wheels.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/*
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/local/bin/build-wheels.sh"]
+VOLUME ["/home/dxt/src"]
