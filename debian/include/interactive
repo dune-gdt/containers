@@ -15,13 +15,10 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
     ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 RUN APT_UPDATE APT_REDIRECT && \
-    APT_INSTALL bash-completion ccache libc++1 libclang-${CLANG_VERSION}-dev \
-        llvm-${CLANG_VERSION} clang-${CLANG_VERSION} \
+    APT_INSTALL bash-completion ccache libc++1 \
         clang-format-${CLANG_VERSION} gdb ninja-build libstdc++6-${GCC_VERSION}-dbg\
-        ack git time valgrind vim-nox wget build-essential cmake \
+        ack time valgrind vim-nox wget \
         less libnotify-bin openssh-server APT_REDIRECT && \
-    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${CLANG_VERSION} 100 && \
-    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${CLANG_VERSION} 100 && \
     echo ' . /usr/share/bash-completion/bash_completion ' >>  /etc/bash.bashrc && \
     mkdir -p /home/user/.ccache && \
     echo "max_size = 5.0G" > /home/user/.ccache/ccache.conf && \
