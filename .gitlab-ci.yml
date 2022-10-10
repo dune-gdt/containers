@@ -52,6 +52,7 @@ debian_ci:
 
 debian_unstable_ci:
   stage: dev
+  allow_failure: true
   variables:
     SUBDIR: debian_ci
   extends: [.docker-in-docker, .subdir]
