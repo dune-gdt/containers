@@ -10,7 +10,8 @@ THISDIR=$(dir $(lastword $(MAKEFILE_LIST)))
 
 REPONAMES = $(patsubst %/,%,$(dir $(wildcard */Dockerfile.in)))
 DOCKER_NOCACHE=
-BUILD_CMD=$(DOCKER_SUDO) docker build ${DOCKER_NOCACHE} --rm=true ${DOCKER_QUIET}
+DOCKER_BUILD=buildx build --load
+BUILD_CMD=$(DOCKER_SUDO) docker $(DOCKER_BUILD) ${DOCKER_NOCACHE} --rm=true ${DOCKER_QUIET}
 REGISTRY=zivgitlab.wwu.io/ag-ohlberger/dune-community/docker
 GITREV?=$(shell git log -1 --pretty=format:"%H")
 
