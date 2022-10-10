@@ -1,4 +1,4 @@
 RUN APT_UPDATE && \
     apt-get dist-upgrade -qqy --no-install-recommends APT_REDIRECT && \
     APT_INSTALL git-gui gitk paraview libgmsh-dev 
-ifelse(DEBIANVERSION, `stable', include(stable-qtcreator), include(unstable-qtcreator))
+ifelse(DEBIANVERSION, `unstable', include(unstable-qtcreator), include(stable-qtcreator))
