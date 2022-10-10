@@ -7,7 +7,7 @@
 #   Rene Milk (2017)
 
 NAME = debian
-DEBIANVERSION=bullseye
+DEBIANVERSION=stable
 AUTHOR = rene.fritze@wwu.de
 
 include $(dir $(lastword $(MAKEFILE_LIST)))/../rules.mk

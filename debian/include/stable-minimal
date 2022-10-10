@@ -5,8 +5,8 @@ FROM debian:bullseye-20220509-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
     DXT_ENVIRONMENT=debian-minimal \
-    CLANG_VERSION=8 \
-    GCC_VERSION=8 \
+    CLANG_VERSION=13 \
+    GCC_VERSION=10 \
     CLANG_PYTHON_PACKAGE=python-clang \
     DXT_DOCKER=1 \
     LANG=en_US.UTF-8 \
