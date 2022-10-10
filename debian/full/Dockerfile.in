@@ -10,5 +10,4 @@
 include(global_macros)
 
 include(full)
-include(tbb_from_source)
 include(labels)

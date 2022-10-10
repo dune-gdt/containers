@@ -8,6 +8,5 @@
 
 include(full)
 include(interactive)
-include(tbb_from_source)
 include(qtcreator)
 include(labels)
