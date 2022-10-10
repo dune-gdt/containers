@@ -15,9 +15,12 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
     ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 RUN APT_UPDATE APT_REDIRECT && \
-    APT_INSTALL bash-completion ccache libc++1 \
-        clang-format-${CLANG_VERSION} gdb ninja-build libstdc++6-${GCC_VERSION}-dbg\
-        ack time valgrind vim-nox wget \
+    APT_INSTALL \
+        bash-completion ccache libc++1 libclang-${CLANG_VERSION}-dev \
+        llvm-${CLANG_VERSION} clang-${CLANG_VERSION} \
+        ninja-build \
+        libstdc++6-${GCC_VERSION}-dbg \
+        ack git time valgrind vim-nox wget build-essential cmake \
         less libnotify-bin openssh-server APT_REDIRECT && \
     echo ' . /usr/share/bash-completion/bash_completion ' >>  /etc/bash.bashrc && \
     mkdir -p /home/user/.ccache && \
