@@ -28,6 +28,7 @@ variables:
     variables:
         DOCKER_HOST: tcp://docker:2375/
         DOCKER_DRIVER: overlay2
+        DOCKER_BUILD: build
     before_script:
         - apk --update add py3-pip m4 git file bash python3 curl make tar
         - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
