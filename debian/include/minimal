@@ -1,4 +1,4 @@
-ifelse(DEBIANVERSION, `unstable', `define(`WITH_BACKPORTS', `')', `define(`WITH_BACKPORTS', `-t stable-backports')')
+ifelse(DEBIANVERSION, `unstable', `define(`WITH_BACKPORTS', `')', `define(`WITH_BACKPORTS', `-t bullseye-backports')')
 
 ifelse(DEBIANVERSION, `unstable', include(unstable-minimal), include(stable-minimal))
 ifelse(DEBIANVERSION, `unstable', `define(`LIBCPP_DEV', `libc++-dev')', `define(`LIBCPP_DEV', `libc++-dev')')
