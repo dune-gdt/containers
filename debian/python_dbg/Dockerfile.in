@@ -8,7 +8,6 @@
 
 include(full)
 include(interactive)
-include(clion)
 # extra packages for local py-wheel building due to dbg-interpreter
 RUN APT_INSTALL libice-dev libimagequant-dev libjbig-dev liblcms2-dev liblzma-dev libpng-dev \
   libpthread-stubs0-dev libraqm-dev libraqm0 libsm-dev libtiff-dev libtiff5-dev libtiffxx5 libwebp-dev \

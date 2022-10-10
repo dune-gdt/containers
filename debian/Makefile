@@ -18,7 +18,7 @@ $(UNSTABLES): NAME=debian-unstable
 $(UNSTABLES): unstable-% : %
 unstable: $(UNSTABLES)
 
-ci = minimal minimal-interactive full clion qtcreator
+ci = minimal minimal-interactive full qtcreator
 ci: docs $(ci)
 unstable_ci: $(addprefix unstable-,$(ci))
 # 'wrong' order to not match implicit included rules
