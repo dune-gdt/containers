@@ -1,2 +1,0 @@
-RUN APT_UPDATE && \
-    APT_INSTALL qtcreator
