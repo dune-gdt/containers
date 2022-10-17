@@ -5,7 +5,7 @@ FROM debian:bullseye-20221004-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
     DXT_ENVIRONMENT=debian-minimal \
-    CLANG_VERSION=13 \
+    CLANG_VERSION=15 \
     GCC_VERSION=10 \
     CLANG_PYTHON_PACKAGE=python3-clang \
     DXT_DOCKER=1 \
