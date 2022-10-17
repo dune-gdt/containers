@@ -1,5 +1,6 @@
 include(global_macros)
 include(minimal)
+include(tbb_from_source)
 
 ENV DEBIAN_FRONTEND=noninteractive \
     DXT_LIBCLANG_SO=/usr/lib/llvm-${CLANG_VERSION}/lib/libclang.so.1 \
