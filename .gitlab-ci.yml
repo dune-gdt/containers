@@ -65,7 +65,9 @@ manylinux:
 
 sanity:
   stage: sanity
-  extends: [.docker-in-docker, ]
+  image: alpine:3.16
+  before_script:
+    - apk --update add py3-pip m4 git file bash python3 curl make tar
   script:
     - make readme
     - make IS_DIRTY
