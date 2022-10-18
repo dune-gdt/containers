@@ -16,12 +16,14 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 
 RUN APT_UPDATE APT_REDIRECT && \
     APT_INSTALL \
-        bash-completion ccache libc++1 libclang-${CLANG_VERSION}-dev \
-        llvm-${CLANG_VERSION} clang-${CLANG_VERSION} \
-        ninja-build \
+        bash-completion ccache libc++1 ninja-build \
+        lsb-release wget software-properties-common gnupg \
         libstdc++6-${GCC_VERSION}-dbg \
         ack git time valgrind vim-nox wget build-essential cmake \
         less libnotify-bin openssh-server APT_REDIRECT && \
+    wget https://apt.llvm.org/llvm.sh && \
+    chmod +x llvm.sh && \
+    ./llvm.sh ${CLANG_VERSION} && \
     echo ' . /usr/share/bash-completion/bash_completion ' >>  /etc/bash.bashrc && \
     mkdir -p /home/user/.ccache && \
     echo "max_size = 5.0G" > /home/user/.ccache/ccache.conf && \
