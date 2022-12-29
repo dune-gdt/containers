@@ -1,3 +1,0 @@
-define(`M4_PYTHON_VERSION', `3.8')
-define(`M4_PY_SHORT', `cp38-cp38')
-include(wheelbuilder_2014)
