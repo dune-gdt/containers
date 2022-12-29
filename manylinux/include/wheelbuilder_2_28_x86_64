@@ -1,4 +1,4 @@
-FROM quay.io/pypa/manylinux_2_28_x86_64:2022-08-29-0fd77fa
+FROM quay.io/pypa/manylinux_2_28_x86_64:2022-12-26-0d38463
 
 MAINTAINER René Fritze <rene.fritze@wwu.de>
 
