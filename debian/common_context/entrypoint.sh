@@ -45,6 +45,7 @@ export ALLINEA_LICENCE_FILE=/home/$USERNAME_/.config/allinea/Licence \
 
 # give the user some sudo capabilities
 if [[ $UID_ != 0 ]] ; then
+  echo "$USERNAME_ ALL=(ALL) NOPASSWD:/usr/bin/aptitude" >> /etc/sudoers
   echo "$USERNAME_ ALL=(ALL) NOPASSWD:/usr/bin/apt-get" >> /etc/sudoers
   echo "$USERNAME_ ALL=(ALL) NOPASSWD:/usr/bin/apt" >> /etc/sudoers
   echo "$USERNAME_ ALL=(ALL) NOPASSWD:/usr/bin/dpkg" >> /etc/sudoers
