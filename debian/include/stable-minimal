@@ -14,6 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # bullseye-backports are enabled for manual installs
 # locale is mainly required for the interactive session
+# libdw1 is required for qtcreator
 RUN APT_UPDATE APT_REDIRECT && \
     apt-get upgrade -qqy --no-install-recommends APT_REDIRECT && \
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
@@ -24,8 +25,8 @@ RUN APT_UPDATE APT_REDIRECT && \
     echo "deb http://deb.debian.org/debian bullseye-backports main contrib non-free" > /etc/apt/sources.list.d/bullseye-backports.list && \
     echo "deb http://deb.debian.org/debian/ stable contrib non-free" > /etc/apt/sources.list.d/stable-nonfree.list && \
     APT_UPDATE APT_REDIRECT && \
-    APT_INSTALL -t bullseye-backports libglvnd0 && \
-    APT_INSTALL automake bison build-essential cmake flex gfortran git libboost-system-dev \
+    APT_INSTALL -t bullseye-backports libglvnd0 libdw1 && \
+    APT_INSTALL automake ninja-build bison build-essential cmake flex gfortran git libboost-system-dev \
                 libboost-thread-dev libboost-filesystem-dev libboost-date-time-dev \
                 libboost-timer-dev libboost-chrono-dev libsuperlu-dev libtool \
                 pkg-config python3 python3-dbg python3-dev libgraphviz-dev python3-tk \

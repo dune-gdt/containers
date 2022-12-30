@@ -1,10 +1,3 @@
-ENV QTC_VERSION=4.2.2
 RUN APT_UPDATE && \
-    apt-get dist-upgrade -qqy --no-install-recommends APT_REDIRECT && \
-    APT_INSTALL git-gui gitk paraview libgmsh-dev && \
-    cd /tmp && \
-    wget http://ftp.fau.de/qtproject/archive/qtcreator/4.2/${QTC_VERSION}/qt-creator-opensource-linux-x86_64-${QTC_VERSION}.run && \
-    wget https://raw.githubusercontent.com/benlau/qtci/master/bin/extract-qt-installer && \
-    chmod 755 extract-qt-installer && \
-    ./extract-qt-installer qt-creator-opensource-linux-x86_64-${QTC_VERSION}.run /usr/local/ && \
-    rm extract-qt-installer qt-creator-opensource-linux-x86_64-${QTC_VERSION}.run
+    APT_INSTALL qtcreator && \
+    rm -rf /var/lib/apt/lists/*
