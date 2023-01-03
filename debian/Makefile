@@ -7,13 +7,13 @@
 #   Rene Milk (2017)
 
 NAME = debian
-DEBIANVERSION=stable
+MAKEFILE_DEBIANVERSION=stable
 AUTHOR = rene.fritze@wwu.de
 
 include $(dir $(lastword $(MAKEFILE_LIST)))/../rules.mk
 
 UNSTABLES = $(addprefix unstable-,$(patsubst %/,%,$(dir $(wildcard */Dockerfile.in))))
-$(UNSTABLES): DEBIANVERSION=unstable
+$(UNSTABLES): MAKEFILE_DEBIANVERSION=unstable
 $(UNSTABLES): NAME=debian-unstable
 $(UNSTABLES): unstable-% : %
 unstable: $(UNSTABLES)

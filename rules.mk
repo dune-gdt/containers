@@ -30,15 +30,15 @@ check_client:
 $(REPONAMES): check_client IS_DIRTY
 	$(eval IMAGE=$(NAME)-$@)
 	$(eval REPO=$(REGISTRY)/$(IMAGE))
-	$(eval DF=Dockerfile.generated.$(DEBIANVERSION))
-	$(eval CTX=$@_$(DEBIANVERSION)_context.tar)
+	$(eval DF=Dockerfile.generated.$(MAKEFILE_DEBIANVERSION))
+	$(eval CTX=$@_$(MAKEFILE_DEBIANVERSION)_context.tar)
 	@tar --create --file $(CTX) -C $@/../common_context .
 	@m4 -D BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 		-D IMAGE="$(IMAGE)" \
 		-D AUTHOR="$(AUTHOR)" \
 		-D GITREV=$(GITREV) \
 		-D DEBIANBASEDATE=20220509 \
-		-D DEBIANVERSION=$(DEBIANVERSION) \
+		-D DEBIANVERSION=$(MAKEFILE_DEBIANVERSION) \
 		-I$(THISDIR)/include -I ./include $@/Dockerfile.in > $@/$(DF)
 	(test -n "${DOCKER_PRUNE}" && docker system prune -f) || true
 	@tar --append --file $(CTX) -C $@ .
