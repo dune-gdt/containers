@@ -14,13 +14,13 @@ ENV NVIDIA_VISIBLE_DEVICES \
 ENV NVIDIA_DRIVER_CAPABILITIES \
     ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
-RUN APT_UPDATE APT_REDIRECT && \
-    APT_INSTALL \
+RUN M4_APT_UPDATE M4_APT_REDIRECT && \
+    M4_APT_INSTALL \
         bash-completion ccache libc++1 ninja-build \
         lsb-release wget software-properties-common gnupg \
         libstdc++6-${GCC_VERSION}-dbg \
         ack git time valgrind vim-nox wget build-essential cmake \
-        less libnotify-bin openssh-server APT_REDIRECT && \
+        less libnotify-bin openssh-server M4_APT_REDIRECT && \
     wget https://apt.llvm.org/llvm.sh && \
     chmod +x llvm.sh && \
     ./llvm.sh ${CLANG_VERSION} && \
@@ -35,6 +35,6 @@ RUN APT_UPDATE APT_REDIRECT && \
     cd /tmp/vimpager && \
     make install && \
     cd && rm -r /tmp/vimpager && \
-    apt-get autoremove -y APT_REDIRECT && \
+    apt-get autoremove -y M4_APT_REDIRECT && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

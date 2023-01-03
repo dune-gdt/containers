@@ -9,7 +9,7 @@
 include(full)
 include(interactive)
 # extra packages for local py-wheel building due to dbg-interpreter
-RUN APT_INSTALL libice-dev libimagequant-dev libjbig-dev liblcms2-dev liblzma-dev libpng-dev \
+RUN M4_APT_INSTALL libice-dev libimagequant-dev libjbig-dev liblcms2-dev liblzma-dev libpng-dev \
   libpthread-stubs0-dev libraqm-dev libraqm0 libsm-dev libtiff-dev libtiff5-dev libtiffxx5 libwebp-dev \
   libxslt1-dev libxml2-dev \
  && cd /usr/include ; ln -s libxml2/libxml

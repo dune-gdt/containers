@@ -16,10 +16,10 @@ ENV TL_TMP_DIR="/tmp/templight" \
     CMAKE_CMD="cmake -DCMAKE_BUILD_TYPE=Release -GNinja" \
     TL_CLONE="git clone --depth=1 --recurse-submodules"
 
-RUN APT_UPDATE APT_REDIRECT && \
-    APT_INSTALL subversion libboost-program-options-dev \
+RUN M4_APT_UPDATE M4_APT_REDIRECT && \
+    M4_APT_INSTALL subversion libboost-program-options-dev \
         libboost-filesystem-dev libboost-system-dev libboost-test-dev python3-dev \
-        git ca-certificates cmake ninja-build build-essential APT_REDIRECT && \
+        git ca-certificates cmake ninja-build build-essential M4_APT_REDIRECT && \
     mkdir -p ${TL_TMP_DIR} && cd ${TL_TMP_DIR} && \
     ${TL_CLONE} --branch=${TL_LLVM_REV} https://github.com/llvm-mirror/llvm llvm && \
     cd ${TL_TMP_DIR}/llvm/tools && \
@@ -33,23 +33,23 @@ RUN APT_UPDATE APT_REDIRECT && \
     mkdir build && \
     cd build && \
     ${CMAKE_CMD} -DLLVM_BUILD_TESTS=0 ../llvm/ && \
-    ninja install APT_REDIRECT && \
+    ninja install M4_APT_REDIRECT && \
     rm -fr ${TL_TMP_DIR}/* && \
     cd ${TL_TMP_DIR} && git clone https://github.com/mikael-s-persson/templight-tools && cd templight-tools && git reset --hard ${TL_TOOLS_REV} && \
     cd ${TL_TMP_DIR}/templight-tools && \
     mkdir build && \
     cd build && \
     ${CMAKE_CMD} ../ && \
-    ninja install APT_REDIRECT && \
+    ninja install M4_APT_REDIRECT && \
     rm -fr ${TL_TMP_DIR}/* && \
-    APT_INSTALL kcachegrind libgraphviz-dev libyaml-cpp-dev libqt5gui5 qt5-qmake  qtbase5-dev APT_REDIRECT &&\
+    M4_APT_INSTALL kcachegrind libgraphviz-dev libyaml-cpp-dev libqt5gui5 qt5-qmake  qtbase5-dev M4_APT_REDIRECT &&\
     cd ${TL_TMP_DIR} && \
     git clone https://github.com/schulmar/Templar templar && \
     cd templar && \
     git checkout feature/templight2 && \
     git submodule update --init && \
     ${CMAKE_CMD} . && \
-    ninja APT_REDIRECT && \
+    ninja M4_APT_REDIRECT && \
     install -m 755 Templar /usr/local/bin && \
     rm -fr ${TL_TMP_DIR} && \
     apt-get autoremove -y && \

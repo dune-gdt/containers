@@ -14,11 +14,11 @@ include(minimal)
 ENV DEBIAN_FRONTEND=noninteractive \
     DXT_ENVIRONMENT=debian-minimal
 
-RUN APT_UPDATE APT_REDIRECT && \
-    APT_INSTALL \
+RUN M4_APT_UPDATE M4_APT_REDIRECT && \
+    M4_APT_INSTALL \
         doxygen texlive-latex-base python3-sphinx \
-        inkscape texlive-latex-extra APT_REDIRECT && \
-    apt-get autoremove -y APT_REDIRECT && \
+        inkscape texlive-latex-extra M4_APT_REDIRECT && \
+    apt-get autoremove -y M4_APT_REDIRECT && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

@@ -51,7 +51,7 @@ ADD entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
     
-# LIBCPP_DEV is defined in include/minimal because older packages were not versioned
+# M4_LIBCPP_DEV is defined in include/minimal because older packages were not versioned
 RUN apt-get update -qq 1> /dev/null && \
     apt-get install -q=100 -y --no-install-recommends doxygen \
         libalberta-dev libeigen3-dev libscotchmetis-dev libscotchparmetis-dev libsuitesparse-dev \

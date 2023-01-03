@@ -1,9 +1,9 @@
-ifelse(DEBIANVERSION, `unstable', `define(`WITH_BACKPORTS', `')', `define(`WITH_BACKPORTS', `-t bullseye-backports')')
+ifelse(DEBIANVERSION, `unstable', `define(`M4_WITH_BACKPORTS', `')', `define(`M4_WITH_BACKPORTS', `-t bullseye-backports')')
 
 ifelse(DEBIANVERSION, `unstable', include(unstable-minimal), include(stable-minimal))
-ifelse(DEBIANVERSION, `unstable', `define(`LIBCPP_DEV', `libc++-dev')', `define(`LIBCPP_DEV', `libc++-dev')')
-ifelse(DEBIANVERSION, `unstable', `define(`JDK', `openjdk-11-jdk')', `define(`JDK', `openjdk-11-jdk')')
-ifelse(DEBIANVERSION, `unstable', `define(`LIBLAPACKE_DEV', `')', `define(`LIBLAPACKE_DEV', `liblapacke-dev')')
+ifelse(DEBIANVERSION, `unstable', `define(`M4_LIBCPP_DEV', `libc++-dev')', `define(`M4_LIBCPP_DEV', `libc++-dev')')
+ifelse(DEBIANVERSION, `unstable', `define(`M4_JDK', `openjdk-11-jdk')', `define(`M4_JDK', `openjdk-11-jdk')')
+ifelse(DEBIANVERSION, `unstable', `define(`M4_LIBLAPACKE_DEV', `')', `define(`M4_LIBLAPACKE_DEV', `liblapacke-dev')')
 
 ENV DEBIAN_FRONTEND=noninteractive \
     DXT_LIBCLANG_SO=/usr/lib/llvm-${CLANG_VERSION}/lib/libclang.so.1 \
