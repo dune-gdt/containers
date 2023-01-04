@@ -5,4 +5,6 @@ export PYVER
 PYTHON_ROOT_DIR=/opt/python/${PYVER}
 export PYTHON_ROOT_DIR
 PYBIN=${PYTHON_ROOT_DIR}/bin
-export PATH=${PYBIN}:${PATH}
+export PYBIN
+PATH=${CCACHE_BIN_DIR}:${PYBIN}:${PATH}
+export PATH
