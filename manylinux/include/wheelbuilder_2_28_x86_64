@@ -39,9 +39,12 @@ RUN echo "alias ls='ls -h --color=auto';\
   wget -c https://github.com/ccache/ccache/releases/download/v4.7/ccache-4.7-linux-x86_64.tar.xz  -O - | tar Jx && \
   mv ccache-*/ccache /usr/local/bin && \
   rm -rf ccache-* && \
-  mkdir -p ${CCACHE_BIN_DIR} \
+  mkdir -p ${CCACHE_BIN_DIR} && \
   cd ${CCACHE_BIN_DIR} && \
-  (for ii in cc c++ cpp g++ gcc ; do ln -s $(which ccache) $ii; done )
+  (for ii in cc c++ cpp g++ gcc mpicc mpic++ mpicxx ; do ln -s $(which ccache) $ii; done )
+
+# the masquerading link needs to be found eralier than the actual compiler
+ENV PATH=${CCACHE_BIN_DIR}:${PATH}
 
 COPY entrypoint.sh /usr/local/bin/
 COPY gosu-amd64 /usr/local/bin/gosu
