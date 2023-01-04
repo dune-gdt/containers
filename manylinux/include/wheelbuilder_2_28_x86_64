@@ -22,7 +22,7 @@ ENV MPICC=/usr/lib64/openmpi/bin/mpicc \
     WHEEL_DIR=/home/dxt/src/docker/wheelhouse \
     PLATFORM=manylinux_2_28_x86_64 \
     PY_SHORT=M4_PY_SHORT \
-    PIP_VERSION=22.2.2 \
+    PIP_VERSION=22.3 \
     CCACHE_BIN_DIR=/usr/local/ccache/bin
 
 # dunecontrol/cmake finds ALL of the pythons in /usr/local/bin if we don't delete them
