@@ -51,5 +51,4 @@ COPY gosu-amd64 /usr/local/bin/gosu
 
 RUN chmod +x /usr/local/bin/*
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["/usr/local/bin/build-wheels.sh"]
 VOLUME ["/home/dxt/src"]
