@@ -1,0 +1,27 @@
+name: Build Container Images
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Sanity
+        run: |
+          make readme
+          make IS_DIRTY
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        subdir: [ 'debian_ci', 'debian_unstable_ci', 'manylinux' ]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and push
+        run: |
+          make ${{ matrix.subdir }}
+          make push_${{ matrix.subdir }}
