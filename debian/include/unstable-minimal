@@ -25,19 +25,19 @@ RUN M4_APT_UPDATE M4_APT_REDIRECT && \
                 aptitude python3-pip python3-virtualenv unzip virtualenv wget libopenblas-dev \
                 g++-${GCC_VERSION} gcc-${GCC_VERSION} gfortran-${GCC_VERSION} \
                 ca-certificates libqt5core5a wget sudo cmake \
+                python3-lazr.restfulclient \
                 cmake-curses-gui gosu M4_APT_REDIRECT && \
     dpkg-reconfigure locales && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 100 && \
     apt-get autoremove -y M4_APT_REDIRECT && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-include(dune_cli)
-
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VERSION} 100 \
+    rm -rf /var/lib/apt/lists/* && \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${GCC_VERSION} 100 \
         --slave /usr/bin/g++ g++ /usr/bin/g++-${GCC_VERSION} \
         --slave /usr/bin/gcov gcov /usr/bin/gcov-${GCC_VERSION} && \
     update-alternatives --config gcc
+
+include(dune_cli)
 
 ADD entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

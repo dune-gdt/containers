@@ -1,0 +1,40 @@
+name: Build Container Images
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Sanity
+        run: |
+          make readme
+          make IS_DIRTY
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        subdir: [ 'debian_ci', 'debian_unstable_ci', 'manylinux' ]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      -
+        name: Login to Zivgitlab
+        uses: docker/login-action@v2
+        with:
+          registry: zivgitlab.wwu.io
+          username: ${{ secrets.ZIVGL_REGISTRY_USER}}
+          password: ${{ secrets.ZIVGL_REGISTRY_PASS}}
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER}}
+          password: ${{ secrets.DOCKER_HUB_PASS}}
+      - name: Build and push
+        run: |
+          make ${{ matrix.subdir }}
+          make push_${{ matrix.subdir }}
